@@ -9,6 +9,6 @@ Test db configuration insede the tests
 
 The service supplies 2 paths:
 1) GET [host]/gettoken/?GUID=[your user guid] 
-  returning token pair { "access": "your token", "refresh": "your token"} if the guid exists
-3) POST [host]/refreshtoken/  body: { "access": "your token", "refresh": "your token"}
-  returning token pair { "access": "your token", "refresh": "your token"} if the first pair valid
+2) POST [host]/refreshtoken/  body: { "access": "your token", "refresh": "your token"}
+
+Both return token pair { "access": "your token", "refresh": "your token"} if the provided data is valid
