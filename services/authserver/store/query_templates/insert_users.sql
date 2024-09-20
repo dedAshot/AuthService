@@ -1,0 +1,1 @@
+INSERT INTO users VALUES (default, $1, $2, $3) RETURNING guid;

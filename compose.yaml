@@ -1,0 +1,66 @@
+name: 'go_testtask'
+version: '1'
+
+services:
+
+  authservice:
+    image: go_testtask-authserver
+    build: ./services/authserver/
+    ports:
+      - "8080:8080"
+    environment:
+      #SMTP_EMAIL: 
+      #SMTP_PASSWORD: 
+      SMTP_EMAIL_FILE: /run/secrets/authservice_smtp_email
+      SMTP_PASSWORD_FILE: /run/secrets/authservice_smtp_password
+      SMTP_HOST: "mtp.gmail.com"
+      SMTP_PORT: 587
+
+      # DB_CREDENTIALS: 
+      DB_CREDENTIALS_FILE: /run/secrets/authservice_db_credentials
+      DB_RETRIES_COUNT: 10
+
+      SERVER_PORT: 8080
+    volumes:
+      - ./volumes/auth_service_logs/:/app/logs
+    secrets:
+      - authservice_smtp_email
+      - authservice_smtp_password
+      - authservice_db_credentials
+    depends_on:
+      - authservice_db
+
+  authservice_db:
+    image: "postgres:16.4"
+    restart: always
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/authservice_db_password
+      POSTGRES_USER_FILE: /run/secrets/authservice_db_user
+      POSTGRES_DB_FILE: /run/secrets/authservice_db_db
+    volumes:
+      - ./volumes/authservice_pgdata/:/var/lib/postgresql/data
+      - ./scripts/authservice_pginit/:/docker-entrypoint-initdb.d/
+    secrets:
+      - authservice_db_password
+      - authservice_db_user
+      - authservice_db_db
+
+secrets:
+  #db secrets
+  authservice_db_password: 
+    file: ./secrets/authservDB/POSTGRES_PASSWORD
+  authservice_db_user: 
+    file: ./secrets/authservDB/POSTGRES_USER
+  authservice_db_db: 
+    file: ./secrets/authservDB/POSTGRES_DB
+  
+  # auth service secrets
+  authservice_smtp_email: 
+    file: ./secrets/authserv/SMTP_EMAIL.txt
+  authservice_smtp_password: 
+    file: ./secrets/authserv/SMTP_PASSWORD.txt
+  authservice_db_credentials: 
+    file: ./secrets/authserv/DB_CREDENTIALS.txt
+  

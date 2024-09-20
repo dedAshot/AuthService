@@ -1,0 +1,7 @@
+secrets/
+
+.env
+
+logs/
+volumes/
+*.exe

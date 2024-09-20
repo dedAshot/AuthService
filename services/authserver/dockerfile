@@ -1,0 +1,15 @@
+FROM golang:1.22.3
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY *.go ./
+COPY auth ./auth/
+COPY server ./server/
+COPY store ./store/
+COPY notificator ./notificator/
+RUN CGO_ENABLED=0 GOOS=linux go build -o /authserver
+RUN chmod +x /authserver
+
+EXPOSE 8080
+
+CMD ["/authserver"]
