@@ -13,7 +13,7 @@ services:
       #SMTP_PASSWORD: 
       SMTP_EMAIL_FILE: /run/secrets/authservice_smtp_email
       SMTP_PASSWORD_FILE: /run/secrets/authservice_smtp_password
-      SMTP_HOST: "mtp.gmail.com"
+      SMTP_HOST: "smtp.gmail.com"
       SMTP_PORT: 587
 
       # DB_CREDENTIALS: 

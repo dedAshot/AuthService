@@ -163,7 +163,7 @@ func notifyAccountOwner(guid string, ip string) error {
 
 	msg := fmt.Sprintf("Warning: You have a new ip address [%s], don't you?", ip)
 
-	err = notificator.SendMsg(email, msg)
+	err = notificator.SendMsg(email, msg, "Your ip has been changed")
 	if err != nil {
 		return err
 	}
