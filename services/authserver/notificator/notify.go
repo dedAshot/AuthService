@@ -46,6 +46,3 @@ func SendMsg(reciverEmail, msg, subject string) error {
 
 	return err
 }
-
-//golang_testovoe
-//googlepassword cykrpzrjknyqwcrf
